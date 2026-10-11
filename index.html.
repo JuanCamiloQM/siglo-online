@@ -1,172 +1,165 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Siglo Online</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #123d2b;
-      color: white;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGLO Online</title>
 
-    .contenedor {
-      max-width: 600px;
-      margin: 30px auto;
-      padding: 25px;
-      background: #1b573c;
-      border: 2px solid #ffd76a;
-      border-radius: 18px;
-    }
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #123d2b;
+  color: white;
+  text-align: center;
+}
 
-    h1 {
-      color: #ffd76a;
-      font-size: 42px;
-    }
+.contenedor {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #1b573c;
+  border: 2px solid #ffd76a;
+  border-radius: 18px;
+}
 
-    input {
-      width: 90%;
-      max-width: 350px;
-      padding: 14px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+h1 { color: #ffd76a; }
 
-    button {
-      display: block;
-      width: 100%;
-      max-width: 380px;
-      margin: 12px auto;
-      padding: 15px;
-      border: none;
-      border-radius: 8px;
-      background: #ffd76a;
-      color: #123d2b;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
 
-    .carta {
-      display: inline-block;
-      background: white;
-      color: #222;
-      padding: 18px 12px;
-      margin: 6px;
-      border-radius: 8px;
-      font-size: 24px;
-      font-weight: bold;
-    }
+button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin: 12px 0;
+  border: none;
+  border-radius: 8px;
+  background: #ffd76a;
+  color: #123d2b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .roja {
-      color: #d52222;
-    }
+.carta {
+  display: inline-block;
+  background: white;
+  color: #222;
+  padding: 15px 10px;
+  margin: 5px;
+  border-radius: 8px;
+  font-size: 23px;
+  font-weight: bold;
+}
 
-    #juego {
-      display: none;
-    }
+.roja { color: #d52222; }
 
-    #mensaje {
-      color: #ffd76a;
-      font-weight: bold;
-    }
-  </style>
+#juego { display: none; }
+#mensaje { color: #ffd76a; }
+</style>
 </head>
+
 <body>
-  <div class="contenedor">
-    <h1>♠️ SIGLO ♠️</h1>
-    <p>¡El juego de cartas colombiano!</p>
+<div class="contenedor">
+  <h1>♠ SIGLO ♠</h1>
+  <p>¡El juego de cartas colombiano!</p>
 
-    <div id="inicio">
-      <p>Escribe tu nombre para comenzar.</p>
-      <input id="nombre" placeholder="Tu nombre">
-      <button onclick="comenzar()">COMENZAR PARTIDA</button>
-    </div>
-
-    <div id="juego">
-      <h2 id="saludo"></h2>
-      <p>Tus cinco cartas:</p>
-      <div id="cartas"></div>
-      <p id="mensaje"></p>
-      <button onclick="repartir()">REPARTIR OTRAS CARTAS</button>
-      <button onclick="volver()">VOLVER AL INICIO</button>
-    </div>
-
-    <p>Versión inicial de prueba.</p>
+  <div id="inicio">
+    <p>Escribe tu nombre para comenzar.</p>
+    <input id="nombre" type="text" placeholder="Tu nombre">
+    <button type="button" onclick="comenzar()">COMENZAR PARTIDA</button>
   </div>
 
-  <script>
-    const palos = [
-      { simbolo: "♠️", roja: false },
-      { simbolo: "♥️", roja: true },
-      { simbolo: "♦️", roja: true },
-      { simbolo: "♣️", roja: false }
-    ];
+  <div id="juego">
+    <h2 id="saludo"></h2>
+    <p>Tus cinco cartas:</p>
+    <div id="cartas"></div>
+    <p id="mensaje"></p>
+    <button type="button" onclick="repartir()">REPARTIR OTRAS CARTAS</button>
+    <button type="button" onclick="volver()">VOLVER AL INICIO</button>
+  </div>
 
-    const valores = [
-      "A", "2", "3", "4", "5", "6", "7",
-      "8", "9", "10", "J", "Q", "K"
-    ];
+  <p>Versión inicial de prueba.</p>
+</div>
 
-    function comenzar() {
-      const nombre = document.getElementById("nombre").value.trim();
+<script>
+const palos = [
+  { simbolo: "♠", roja: false },
+  { simbolo: "♥", roja: true },
+  { simbolo: "♦", roja: true },
+  { simbolo: "♣", roja: false }
+];
 
-      if (nombre === "") {
-        alert("Escribe tu nombre primero.");
-        return;
-      }
+const valores = [
+  "A", "2", "3", "4", "5", "6", "7",
+  "8", "9", "10", "J", "Q", "K"
+];
 
-      document.getElementById("inicio").style.display = "none";
-      document.getElementById("juego").style.display = "block";
-      document.getElementById("saludo").textContent =
-        "¡Buena suerte, " + nombre + "!";
+function comenzar() {
+  const campo = document.getElementById("nombre");
+  const nombre = campo.value.trim();
 
-      repartir();
-    }
+  if (!nombre) {
+    alert("Escribe tu nombre primero.");
+    campo.focus();
+    return;
+  }
 
-    function repartir() {
-      const mazo = [];
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("juego").style.display = "block";
+  document.getElementById("saludo").textContent =
+    "¡Buena suerte, " + nombre + "!";
 
-      palos.forEach(function(palo) {
-        valores.forEach(function(valor) {
-          mazo.push({
-            valor: valor,
-            simbolo: palo.simbolo,
-            roja: palo.roja
-          });
-        });
+  repartir();
+}
+
+function repartir() {
+  const mazo = [];
+
+  palos.forEach(palo => {
+    valores.forEach(valor => {
+      mazo.push({
+        valor: valor,
+        simbolo: palo.simbolo,
+        roja: palo.roja
       });
+    });
+  });
 
-      mazo.sort(function() {
-        return Math.random() - 0.5;
-      });
+  // Barajar la baraja
+  for (let i = mazo.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [mazo[i], mazo[j]] = [mazo[j], mazo[i]];
+  }
 
-      const mano = mazo.slice(0, 5);
-      const zona = document.getElementById("cartas");
-      zona.innerHTML = "";
+  const zona = document.getElementById("cartas");
+  zona.innerHTML = "";
 
-      mano.forEach(function(carta) {
-        const elemento = document.createElement("span");
-        elemento.className = "carta" + (carta.roja ? " roja" : "");
-        elemento.textContent = carta.valor + carta.simbolo;
-        zona.appendChild(elemento);
-      });
+  mazo.slice(0, 5).forEach(carta => {
+    const elemento = document.createElement("span");
+    elemento.className = "carta" + (carta.roja ? " roja" : "");
+    elemento.textContent = carta.valor + carta.simbolo;
+    zona.appendChild(elemento);
+  });
 
-      document.getElementById("mensaje").textContent =
-        "¡Cartas repartidas!";
-    }
+  document.getElementById("mensaje").textContent =
+    "¡Cartas repartidas!";
+}
 
-    function volver() {
-      document.getElementById("juego").style.display = "none";
-      document.getElementById("inicio").style.display = "block";
-      document.getElementById("nombre").value = "";
-    }
-  </script>
+function volver() {
+  document.getElementById("juego").style.display = "none";
+  document.getElementById("inicio").style.display = "block";
+  document.getElementById("nombre").value = "";
+}
+</script>
 </body>
 </html>
